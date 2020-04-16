@@ -753,26 +753,54 @@ function Tick()
 
 function handlekeydown(e)
 {
+	var angley;
+	//if(angleY > 0) angley = angleY % 90;
+	//else angley = angleY % -90;
 	angley = angleY % 90;
-	if(e.keyCode==73){ // I
-		if((angley >-35) && (angley < 35)) ty-=0.2;
-		else if(angley > 0) tx-=0.2
-		else tx+=0.2;
+	if((angleY > -135) && (angleY < 135))
+	{
+		if(e.keyCode==73){ // I
+			if((angley >-35) && (angley < 35)) ty-=0.2;
+			else if(angley > 0) tx-=0.2
+			else tx+=0.2;
+		}
+		if(e.keyCode==75){ //K
+			if((angley >-35) && (angley < 35)) ty+=0.2;
+			else if(angley > 0) tx+=0.2
+			else tx-=0.2;
+		}
+		if(e.keyCode==74){ // J
+			if((angley >-35) && (angley < 35)) tx+=0.2;
+			else if(angley > 0) ty-=0.2
+			else ty+=0.2;
+		}
+		if(e.keyCode==76){ //L
+			if((angley >-35) && (angley < 35)) tx-=0.2;
+			else if(angley > 0) ty+=0.2
+			else ty-=0.2;
+		}
 	}
-	if(e.keyCode==75){ //K
-		if((angley >-35) && (angley < 35)) ty+=0.2;
-		else if(angley > 0) tx+=0.2
-		else tx-=0.2;
-	}
-	if(e.keyCode==74){ // J
-		if((angley >-35) && (angley < 35)) tx+=0.2;
-		else if(angley > 0) ty-=0.2
-		else ty+=0.2;
-	}
-	if(e.keyCode==76){ //L
-		if((angley >-35) && (angley < 35)) tx-=0.2;
-		else if(angley > 0) ty+=0.2
-		else ty-=0.2;
+	else {
+		if(e.keyCode==73){ // I
+			if((angley >-35) && (angley < 35)) ty+=0.2;
+			else if(angley > 0) tx+=0.2
+			else tx-=0.2;
+		}
+		if(e.keyCode==75){ //K
+			if((angley >-35) && (angley < 35)) ty-=0.2;
+			else if(angley > 0) tx-=0.2
+			else tx+=0.2;
+		}
+		if(e.keyCode==74){ // J
+			if((angley >-35) && (angley < 35)) tx-=0.2;
+			else if(angley > 0) ty+=0.2
+			else ty-=0.2;
+		}
+		if(e.keyCode==76){ //L
+			if((angley >-35) && (angley < 35)) tx+=0.2;
+			else if(angley > 0) ty-=0.2
+			else ty+=0.2;
+		}
 	}
 	if(e.keyCode==68) angleY+=1.0; // A
 	if(e.keyCode==65) angleY-=1.0; // D		
