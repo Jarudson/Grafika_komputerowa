@@ -2,6 +2,12 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <script type="text/javascript">
+//*****************************!!!WARNING!!!*********************************************//
+//***************************************************************************************//
+//***************************************************************************************//
+//***************** PROGRAM DZIALA TYLKO W PRZEGLADARCE: ********************************//
+//***************************** GOOGLE CHROME *******************************************// nie wiem dlaczego :/
+//***************************************************************************************//
 var gl;
 var shaderProgram;
 var uPMatrix;
@@ -652,10 +658,14 @@ function startGL()
 //let angle = 0.0; //Macierz transformacji świata - określenie położenia kamery 
 var angleZ = 0.0;
 var angleY = 0.0;
+//var angleX = -90.0;
+//var tz = -13.0;
+//var tx = -6.5;
+//var ty = 0.0;
 var angleX = -90.0;
-var tz = -13.0;
+var ty = +12.0;
 var tx = -6.5;
-var ty = 0.0;
+var tz = +0.5;
 function Tick()
 {  
   let uMVMatrix = [
@@ -690,13 +700,29 @@ function Tick()
   1,0,0,0,
   0,1,0,0,
   0,0,1,0,
-  tx,ty,tz,1
+  0,0,tz,1
   ];
   
+  let uMVTranslateX = [
+  1,0,0,0,
+  0,1,0,0,
+  0,0,1,0,
+  tx,0,0,1
+  ];
+  
+  let uMVTranslateY = [
+  1,0,0,0,
+  0,1,0,0,
+  0,0,1,0,
+  0,ty,0,1
+  ];
+  
+  uMVMatrix = MatrixMul(uMVMatrix,uMVTranslateX);
+  uMVMatrix = MatrixMul(uMVMatrix,uMVTranslateY);
+  uMVMatrix = MatrixMul(uMVMatrix,uMVTranslateZ);
   uMVMatrix = MatrixMul(uMVMatrix,uMVRotX);
   uMVMatrix = MatrixMul(uMVMatrix,uMVRotY);
   uMVMatrix = MatrixMul(uMVMatrix,uMVRotZ);
-  uMVMatrix = MatrixMul(uMVMatrix,uMVTranslateZ);
   //alert(uPMatrix);
   
   //Render Scene
@@ -727,27 +753,33 @@ function Tick()
 
 function handlekeydown(e)
 {
-	if(e.keyCode==73) tz+=0.2; // I
-	if(e.keyCode==75) tz-=0.2; //K
-	if(e.keyCode==74) tx+=0.2; //J
-	if(e.keyCode==76) tx-=0.2; //L
-	if(e.keyCode==68){ // A
-		angleY+=1.0;
-		//tz -=0.2;
-		//tx -=0.2;
-		//tx = -temp;
-		
+	angley = angleY % 90;
+	if(e.keyCode==73){ // I
+		if((angley >-35) && (angley < 35)) ty-=0.2;
+		else if(angley > 0) tx-=0.2
+		else tx+=0.2;
 	}
-	if(e.keyCode==65){  //D 
-		angleY-=1.0;
-		//tz -=0.5;
-		//tx -=0.5;
-		//tx = temp;
-	}		
-	if(e.keyCode==81) angleZ+=1.0; //Q
-	if(e.keyCode==69) angleZ-=1.0; //E
-	if(e.keyCode==87) angleX+=1.0; //W
-	if(e.keyCode==83) angleX-=1.0; //S
+	if(e.keyCode==75){ //K
+		if((angley >-35) && (angley < 35)) ty+=0.2;
+		else if(angley > 0) tx+=0.2
+		else tx-=0.2;
+	}
+	if(e.keyCode==74){ // J
+		if((angley >-35) && (angley < 35)) tx+=0.2;
+		else if(angley > 0) ty-=0.2
+		else ty+=0.2;
+	}
+	if(e.keyCode==76){ //L
+		if((angley >-35) && (angley < 35)) tx-=0.2;
+		else if(angley > 0) ty+=0.2
+		else ty-=0.2;
+	}
+	if(e.keyCode==68) angleY+=1.0; // A
+	if(e.keyCode==65) angleY-=1.0; // D		
+	//if(e.keyCode==81) angleZ+=1.0; //Q
+	//if(e.keyCode==69) angleZ-=1.0; //E
+	//if(e.keyCode==87) angleX+=1.0; //W
+	//if(e.keyCode==83) angleX-=1.0; //S
 
 }
 </script>
